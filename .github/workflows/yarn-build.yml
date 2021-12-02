@@ -23,9 +23,9 @@ jobs:
         run: yarn bootstrap
         working-directory: js
 
-      # - name: Build all packages
-      #   run: yarn build
-      #   working-directory: js
+      - name: Build all packages
+        run: yarn build
+        working-directory: js
 
       - name: Commit report
         run: |
