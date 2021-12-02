@@ -27,7 +27,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: public.ecr.aws/c7s0a2g7/metaplex
+          images: 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex
           tags: |
             type=sha
           flavor: |
