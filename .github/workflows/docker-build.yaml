@@ -1,10 +1,7 @@
 name: Dokcer build
 
 on:
-  push:
-    branches: [mlabs/build]
-  pull_request:
-    branches: [mlabs/build]
+  workflow_dispatch:
 
 jobs:
   build:

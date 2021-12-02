@@ -1,10 +1,8 @@
-name: Yarn build
+name: Deploy gh-pages
 
 on:
   push:
-    branches: [master, mlabs/build]
-  pull_request:
-    branches: [master]
+    branches: [mlabs/build]
 
 jobs:
   build:
@@ -21,6 +19,14 @@ jobs:
         run: yarn install
         working-directory: js
 
+      - name: Bootstrap
+        run: yarn bootstrap
+        working-directory: js
+
       - name: Build all packages
         run: yarn build
         working-directory: js
+
+      - name: Build all packages
+        run: yarn deploy
+        working-directory: js/packages/web
