@@ -1,0 +1,32 @@
+name: Dokcer build
+
+on:
+  push:
+    branches: [mlabs/build]
+  pull_request:
+    branches: [mlabs/build]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: metaplex
+          tags: |
+            type=sha
+          flavor: |
+            latest=true
+
+      - name: Run docker build
+        id: build-base-image
+        uses: docker/build-push-action@v2
+        with:
+          file: Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+          push: false
+
