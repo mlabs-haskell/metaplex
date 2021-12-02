@@ -16,7 +16,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: metaplex
+          images: public.ecr.aws/c7s0a2g7/metaplex
           tags: |
             type=sha
           flavor: |
@@ -28,5 +28,5 @@ jobs:
         with:
           file: Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
-          push: false
+          push: true
 
