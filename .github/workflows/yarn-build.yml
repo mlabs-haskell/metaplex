@@ -23,10 +23,15 @@ jobs:
         run: yarn bootstrap
         working-directory: js
 
-      - name: Build all packages
-        run: yarn build
-        working-directory: js
+      # - name: Build all packages
+      #   run: yarn build
+      #   working-directory: js
 
-      - name: Build all packages
+      - name: Commit report
+        run: |
+          git config --global user.name 'Alex Pliev'
+          git config --global user.email 'alex@mlabs.city'
+
+      - name: Build and deploy
         run: yarn deploy
         working-directory: js/packages/web
