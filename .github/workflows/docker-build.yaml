@@ -23,21 +23,29 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex
-          tags: |
-            type=sha
-          flavor: |
-            latest=true
+      # - name: Docker meta
+      #   id: meta
+      #   uses: docker/metadata-action@v3
+      #   with:
+      #     images: 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex
+      #     tags: |
+      #       type=sha
+      #     flavor: |
+      #       latest=true
 
-      - name: Run docker build
-        id: build-base-image
-        uses: docker/build-push-action@v2
-        with:
-          file: Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}
-          push: true
+      # - name: Run docker build
+      #   id: build-base-image
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     file: Dockerfile
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     push: true
 
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: docker_nodejs_demo
+          IMAGE_TAG: nodejs_demo_image
+        run: |
+          docker build -t 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex:latest .
+          docker push 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex:latest
