@@ -41,11 +41,16 @@ jobs:
       #     tags: ${{ steps.meta.outputs.tags }}
       #     push: true
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: docker_nodejs_demo
-          IMAGE_TAG: nodejs_demo_image
-        run: |
-          docker build -t 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex:latest .
-          docker push 561718152453.dkr.ecr.us-east-1.amazonaws.com/metaplex:latest
+      - name: Get ECR password (temporary)
+        id: get-ecr-password
+        run: echo "::set-output name=password::$(aws ecr get-login-password)"
+
+      - name: Build & Push image
+        uses: docker/build-push-action@v1
+        with:
+          registry: ${{ steps.login-ecr.outputs.registry }}
+          repository: metaplex
+          username: AWS
+          password: ${{ steps.get-ecr-password.outputs.password }}  # temporary
+          add_git_labels: true
+          tag_with_ref: true
